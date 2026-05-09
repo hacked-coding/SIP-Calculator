@@ -1,96 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-     <!-- This is where the description will show up -->
-<div id="repo-description">Calculate your SIP with GREAT FINANCIAL SERVICES Pvt. Ltd. (A STAR ENTERPRISES subsidiary)</div>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Great Financial Services - SIP Calculator</title>
+    <title>Great Financial Services Calculator</title>
     <style>
-        /* A little bit of CSS to make it look nice */
+        /* Styling for the red background and golden font */
         body {
+            background-color: #8B0000; /* Dark Red background */
+            color: gold;               /* Golden font color */
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            margin-top: 50px;
         }
-        .calculator-box {
-            background: white;
-            padding: 20px 30px;
+        
+        .calculator-container {
+            background-color: #A52A2A; /* Slightly different red for the box */
+            padding: 30px;
+            border: 2px solid gold;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 300px;
+            width: 350px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.5);
         }
-        h2 { text-align: center; color: #333; }
-        label { display: block; margin-top: 10px; color: #666; }
-        input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-        button {
+
+        /* Headings and text layout */
+        h1 {
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        p.description {
+            margin-bottom: 25px;
+            font-style: italic;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
             width: 100%;
             padding: 10px;
-            margin-top: 20px;
-            background-color: #28a745;
-            color: white;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid gold;
+            border-radius: 4px;
+            background-color: white; 
+            color: black;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: gold;
+            color: #8B0000; /* Red text on the golden button */
+            font-weight: bold;
+            font-size: 18px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover { background-color: #218838; }
+
+        button:hover {
+            background-color: #FFD700; /* Brighter gold when hovering */
+        }
+
         #result {
             margin-top: 20px;
+            font-size: 22px;
             font-weight: bold;
-            font-size: 1.2em;
             text-align: center;
-            color: #0056b3;
+            padding-top: 15px;
+            border-top: 1px solid gold;
         }
     </style>
 </head>
 <body>
 
-<div class="calculator-box">
-    <h2>SIP Calculator</h2>
-    
-    <label for="investment">Monthly Investment Amount:</label>
-    <input type="number" id="investment" placeholder="e.g., 5000">
+    <h1>Great Financial Services</h1>
+    <p class="description">Calculate your great future with our investment tools.</p>
 
-    <label for="duration">Investment Duration (Years):</label>
-    <input type="number" id="duration" placeholder="e.g., 10">
+    <div class="calculator-container">
+        <label for="principal">Enter the amount you want to invest:</label>
+        <input type="number" id="principal" placeholder="e.g., 5000">
 
-    <label for="rate">Expected Rate of Interest (%):</label>
-    <input type="number" id="rate" placeholder="e.g., 12">
+        <label for="years">Enter the Investment duration (Years):</label>
+        <input type="number" id="years" placeholder="e.g., 10">
 
-    <button onclick="calculateSIP()">Calculate</button>
+        <label for="rate">Enter the expected rate of interest (%):</label>
+        <input type="number" id="rate" placeholder="e.g., 12">
 
-    <div id="result">Maturity Amount : 0.00</div>
-</div>
+        <button onclick="calculateMaturity()">Calculate</button>
 
-<script>
-    // This JavaScript replaces your C++ main() function
-    function calculateSIP() {
-        // Grab the values from the input boxes (like 'cin')
-        let P = parseFloat(document.getElementById("investment").value);
-        let n = parseFloat(document.getElementById("duration").value);
-        let r = parseFloat(document.getElementById("rate").value);
+        <div id="result">Maturity Amount: 0.00</div>
+    </div>
 
-        // Check if inputs are valid numbers
-        if (isNaN(P) || isNaN(n) || isNaN(r)) {
-            document.getElementById("result").innerText = "Please enter valid numbers.";
-            return;
+    <script>
+        function calculateMaturity() {
+            // Get values from inputs (acts like 'cin' in C++)
+            let P = parseFloat(document.getElementById('principal').value);
+            let n = parseFloat(document.getElementById('years').value);
+            let r = parseFloat(document.getElementById('rate').value);
+
+            // Safety check to ensure all boxes are filled
+            if (isNaN(P) || isNaN(n) || isNaN(r)) {
+                document.getElementById('result').innerHTML = "Please enter valid numbers.";
+                return;
+            }
+
+            // The exact logic from your C++ code
+            let a = n * 12;
+            let i = r / (12 * 100);
+            
+            // Math.pow replaces pow() from <cmath>
+            let T = P * ((Math.pow(1 + i, a) - 1) / i) * (1 + i);
+
+            // Output the result (acts like 'cout') formatted to 2 decimals
+            document.getElementById('result').innerHTML = "Maturity Amount: ₹" + T.toFixed(2);
         }
-
-        // The exact math from your C++ code
-        let a = n * 12;
-        let i = r / (12 * 100);
-        
-        // Math.pow replaces pow from <cmath>
-        let T = P * ((Math.pow(1 + i, a) - 1) / i) * (1 + i);
-
-        // Print the result to the screen (like 'cout'), formatted to 2 decimal places
-        document.getElementById("result").innerText = "Maturity Amount : ₹" + T.toFixed(2);
-    }
-</script>
+    </script>
 
 </body>
 </html>
