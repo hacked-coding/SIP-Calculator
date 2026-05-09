@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Financial Services - SIP Calculator</title>
+    <style>
+        /* A little bit of CSS to make it look nice */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-box {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h2 { text-align: center; color: #333; }
+        label { display: block; margin-top: 10px; color: #666; }
+        input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #218838; }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-box">
+    <h2>SIP Calculator</h2>
+    
+    <label for="investment">Monthly Investment Amount:</label>
+    <input type="number" id="investment" placeholder="e.g., 5000">
+
+    <label for="duration">Investment Duration (Years):</label>
+    <input type="number" id="duration" placeholder="e.g., 10">
+
+    <label for="rate">Expected Rate of Interest (%):</label>
+    <input type="number" id="rate" placeholder="e.g., 12">
+
+    <button onclick="calculateSIP()">Calculate</button>
+
+    <div id="result">Maturity Amount : 0.00</div>
+</div>
+
+<script>
+    // This JavaScript replaces your C++ main() function
+    function calculateSIP() {
+        // Grab the values from the input boxes (like 'cin')
+        let P = parseFloat(document.getElementById("investment").value);
+        let n = parseFloat(document.getElementById("duration").value);
+        let r = parseFloat(document.getElementById("rate").value);
+
+        // Check if inputs are valid numbers
+        if (isNaN(P) || isNaN(n) || isNaN(r)) {
+            document.getElementById("result").innerText = "Please enter valid numbers.";
+            return;
+        }
+
+        // The exact math from your C++ code
+        let a = n * 12;
+        let i = r / (12 * 100);
+        
+        // Math.pow replaces pow from <cmath>
+        let T = P * ((Math.pow(1 + i, a) - 1) / i) * (1 + i);
+
+        // Print the result to the screen (like 'cout'), formatted to 2 decimal places
+        document.getElementById("result").innerText = "Maturity Amount : ₹" + T.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
